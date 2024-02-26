@@ -2,6 +2,7 @@ const express = require("express");
 const { Server } = require("socket.io");
 const http = require("http");
 
+
 const app = express();
 
 const server = http.createServer(app);
@@ -17,74 +18,80 @@ server.listen(8080, () => {
 
 const webSocketServer = new Server(server);
 
+let count = 0;
+
 webSocketServer.on("connection", (socket) => {
+  count++;
+  socket.broadcast.emit("newuser",count)
   socket.emit("xyz", "hello");
+  socket.on("mno", (msg) => {
+    console.log(msg);
+  });
+  socket.on("disconnect", () => {
+    count--;
+    console.log("current count " + count);
+  });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 // socket.on("xyz", (msg) => {
 //   console.log(msg);
 // });this is was an example becuse we wil done this thing on frntend
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // app.get("/",(req,res)=>{
 //     res.send("home page")

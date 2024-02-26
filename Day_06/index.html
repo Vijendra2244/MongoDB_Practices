@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>simple-chat-app</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Simple Chat App</h1>
+    <button onclick="sendMessage()">Send</button>
+    
+    <script
+      src="https://cdn.socket.io/4.7.4/socket.io.min.js"
+      integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+      crossorigin="anonymous"
+    ></script>
 
+    <script>
+      const socket = io("http://localhost:8080/", {
+        transports: ["websocket"],
+      });
 
-    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
-</body>
+      socket.on("xyz", (msg) => {
+        console.log(msg);
+      });
+      socket.on("newuser",(msg)=>{
+        console.log(msg)
+      })
+
+      const sendMessage = () => {
+        socket.emit("mno", "hey from client");
+        
+      };
+    </script>
+  </body>
 </html>
